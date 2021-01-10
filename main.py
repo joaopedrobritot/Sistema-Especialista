@@ -62,8 +62,8 @@ def chatbot(parser):
 
         if(ord(parser.atual_fact) in range(76,90)):
             print('>> Acredito que o melhor notebook para voce é o: ' + N_answer[parser.atual_fact] + ' <<')
-            s = urllib.parse.quote('stackoverflow.com/questions/48689413/printing-a-link-python')
-            print('Sugestão de compra: ' +  'https://'+s)
+            s = urllib.parse.quote(N_answer[parser.atual_fact])
+            print('Sugestões de compra: ' +  'https://zoom.com.br/search?sortBy=prod_items_sort_by_price_asc&q='  + s)
             #DEBUG
             # prompt.do_solve(parser.queries)
             # parserSolve = ESParser(prompt.get_lines())

@@ -1,0 +1,6 @@
+A | B + D => C # C is False
+=
+?C
+
+# assertions
+# =

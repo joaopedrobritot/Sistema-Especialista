@@ -1,0 +1,14 @@
+# this is a comment$
+# all the required rules and symbols, along with the bonus ones, will be
+# shown here. spacing is not important
+
+A => B
+C => B
+D => B
+A | !C => !D
+
+=A
+
+?ABD
+
+# Not that easy because A | !C => !D so D Is false; then D => B, but because the left side is False it doesn't matter

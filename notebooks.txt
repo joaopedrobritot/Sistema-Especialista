@@ -1,0 +1,15 @@
+{
+	'L': 'Notebook Samsung Book X40 Intel Core i5 8GB 1TB - 15,6 Placa de Vídeo 2GB',
+	'M': 'Notebook Samsung Book X30 Intel Core i5 8GB 1TB - 15,6',
+	'N': 'Notebook 246-G7 9MW01LA, Processador i5, 8GB Memória, Armazenamento 256GB SSD, Tela 14", Windows 10 Home - HP CX 1 UN',
+	'O': 'Notebook Acer Aspire 3 A315-42G-R2LK AMD Ryzen 7 12GB 512GB SSD Radeon 540X',
+	'P': 'Notebook Gamer Samsung Odyssey 9a Intel Core I5 8GB (Geforce GTX1650 4GB) 1TB',
+	'Q': 'Samsung Odyssey2 - i7-9750H, 16GB,1TB+512GB SSD,NVIDIA',
+	'R': 'Notebook Samsung Flash F30 Intel Celeron , 4GB RAM, 64GB SSD',
+	'S': 'Notebook Samsung Book E20 Intel Celeron 4GB 500GB',
+	'T': 'Notebook Samsung Book X20 10a Intel Core I5 4GB 1TB W10 15,6',
+	'U': 'FALTA',
+	'V': 'Samsung Book E30 Intel® Core™ i3-10110U, 4GB RAM, 1TB HDD',
+	'X': 'FALTA',
+
+}

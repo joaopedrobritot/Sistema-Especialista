@@ -1,0 +1,13 @@
+B => A
+D + E => B
+G + H => F
+I + J => G
+G => H
+L + M => K
+O + P => L + N + Z
+N + Z => M
+E => O
+
+=DEIJP
+?AFKP
+# True, true, true, True

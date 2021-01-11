@@ -1,0 +1,26 @@
+A + a => B
+A + !a => G
+B + b => E
+B + !b => C
+E + e => F
+E + !e => N
+F + f => L
+F + !f => M
+C + c => O
+C + !c => D
+D + d => P  
+D + !d => Q
+G + g => H
+G + !g => I
+H + h => R
+H + !h => S
+I + i => J
+I + !i => K
+J + j => T
+J + !j => U
+K + k => V
+K + !k => X
+
+=A
+
+?LMNOPQRSTUVX

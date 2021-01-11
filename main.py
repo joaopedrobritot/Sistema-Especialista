@@ -3,12 +3,14 @@ import ast
 import random
 import codecs
 import urllib.parse
+import webbrowser
 
 from expert_system import Prompt, Tree, Print
 from expert_system.parser.Parser import ESParser
 from expert_system.config.Env import Env
 from expert_system.config.Cmd import Cmd
 from expert_system.util.Color import Color
+import tkinter as tk
 
 dictionary = {}
 B_answer = {}
@@ -47,7 +49,6 @@ def chatbot(parser):
         
         answer = input("Juju Bot: " + Banswer + dictionary[parser.atual_fact] + '\n' +
                         "Usuário: ")
-
         if('sim' in answer.lower()):
             prompt.do_add_fact(parser.atual_fact.lower())
             next = parser.atual_fact + parser.atual_fact.lower() + '+'
@@ -62,15 +63,51 @@ def chatbot(parser):
 
         if(ord(parser.atual_fact) in range(76,90)):
             print('>> Acredito que o melhor notebook para voce é o: ' + N_answer[parser.atual_fact] + ' <<')
-            s = urllib.parse.quote(N_answer[parser.atual_fact])
-            print('Sugestões de compra: ' +  'https://zoom.com.br/search?sortBy=prod_items_sort_by_price_asc&q='  + s)
+            finalString = 'https://zoom.com.br/search?sortBy=prod_items_sort_by_price_asc&q='  + urllib.parse.quote(N_answer[parser.atual_fact])
+            print('Juju Bot: Para facilitar sua vida, abri o produto em seu navegador, obrigado :D' )
+            webbrowser.open(finalString, new = 0, autoraise=False)
             #DEBUG
             # prompt.do_solve(parser.queries)
             # parserSolve = ESParser(prompt.get_lines())
             # res = resolve_lines(parserSolve)
             break
-           
-            
+
+
+def updateText(app):
+    if(App.input.get()):
+        App.mainLabel.config(text=App.input.get())
+
+class Application(tk.Frame):
+    def __init__(self, master=None):
+        super().__init__(master)
+        self.master = master
+        self.master.geometry("500x500")
+        self.pack()
+        
+        self.create_widgets()
+        pass
+    
+    def create_widgets(self):
+        self.input = tk.Entry(self)
+        
+        self.mainLabel = tk.Label(self.master, text = "OIIII") 
+        self.mainLabel.config(font =("Courier", 14))
+
+        self.mainText = tk.Text(self.master,height=5, width=50)
+        self.mainText.insert(tk.END, "Textinho")
+        
+        self.sendButton = tk.Button(self, text="Enviar")
+        self.sendButton['command'] = updateText(self)
+        
+        self.mainLabel.pack(side='top')
+        self.input.pack(side='left')
+        self.mainText.pack() 
+        self.sendButton.pack(side='right') 
+        
+       
+App = Application(master=tk.Tk())
+
+
 if __name__ == "__main__":
     args = Cmd.args
 
@@ -78,6 +115,8 @@ if __name__ == "__main__":
         with open(args.input) as f:
             lines = f.readlines()
 
+            #teste interface
+            
             if args.mode == "interactive":
                 Prompt.ESPrompt(lines).cmdloop()  
             else: 
@@ -87,3 +126,5 @@ if __name__ == "__main__":
     except (Exception, BaseException) as e:
         print(e)
         sys.exit(1)
+
+

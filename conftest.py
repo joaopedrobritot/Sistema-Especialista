@@ -3,5 +3,5 @@ def pytest_configure(config):
     sys._called_from_test = True
 
 def pytest_unconfigure(config):
-    import sys  # This was missing from the manual
+    import sys
     del sys._called_from_test

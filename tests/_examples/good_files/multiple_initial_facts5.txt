@@ -1,8 +1,0 @@
-A + B => E #
-C + D => F #
-
-=BD
-?EF
-
-# assertions
-# =ABECDFGHIZ

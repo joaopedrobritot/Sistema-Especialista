@@ -1,0 +1,15 @@
+{	
+	'WelcomeMsg': 'Olá, bem vindo ao assistente de escolha de notebooks :D',
+    'A': 'Você quer um computador para atividades pesadas (para trabalho e jogos)?',
+    'B': 'Você dá mais relevância à qualidade de imagem do que ao desempenho do notebook?',
+    'C': 'É possível dizer que seu orçamento é baixo?', 
+    'D': 'Você considera mais relevante a quantidade de armazenamento do que velocidade?', 
+    'E': 'Você tem preferência em notebooks com telas grandes do que com telas pequenas?', 
+    'F': 'Você pretende passar o tempo jogando em seu notebook?', 
+    'G': 'Você considera-se uma pessoa que viaja muito junto ao notebook?', 
+    'H': 'O uso de serviços de Armazenamento de Nuvem, como google drive e onedrive, está em sua mente?', 
+    'I': 'Para você, o tempo de uso, fora da tomada, deve ser maior que 4 horas?',
+    'J': 'Você pretende assistir séries de forma frequente em seu novo notebook?', 
+    'K': 'Você considera que a principal  atividade que irá realizar com o notebook é a navegação na rede?',
+
+}

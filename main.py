@@ -7,10 +7,10 @@ import webbrowser
 from interface.GUI import GUI
 import threading
 import time
+import os
 
-from expert_system import Prompt, Tree, Print
+from expert_system import Prompt, Tree
 from expert_system.parser.Parser import ESParser
-from expert_system.config.Env import Env
 from expert_system.config.Cmd import Cmd
 from expert_system.util.Color import Color
 import tkinter as tk
@@ -18,15 +18,20 @@ import tkinter as tk
 dictionary = {}
 B_answer = {}
 N_answer = {}
+BOT_NAME = f"{ Color.BLUE }Juazres: { Color.END }"
+TRUE_ANSWER = []
+FALSE_ANSWER = []
+BYE_ANSWER = ['xau', 'sair', 'exit']
 #gui = GUI()
 
-def resolve_lines(parser):
+def resolve_lines(parser, prt=False):
     tree = Tree.NPITree(parser.structured_rules, parser.facts, parser.queries)
     results = {}
     for query in parser.queries:
         results[query] = tree.resolve_query(query)
-        color = Color.GREEN if results[query] is True else Color.FAIL
-        print(f"{ query } resolved as { color }{ results[query] }{ Color.END }")
+        if(prt):
+            color = Color.GREEN if results[query] is True else Color.FAIL
+            print(f"{ query } resolved as { color }{ results[query] }{ Color.END }")
     return results
 
 
@@ -38,89 +43,77 @@ def importFromFile(str):
     file.close()
     return result
 
+def realType(str, userinput=True):
+    for letter in str:
+        sys.stdout.write(letter)
+        sys.stdout.flush()
+        time.sleep(random.random()*1/10)
+  
+
 def chatbot(parser):
-    dictionary = importFromFile('dictionary')
-    B_answer = importFromFile('B_answer')
-    N_answer = importFromFile('notebooks')
+    dictionary = importFromFile('./dictionaries/dictionary')
+    B_answer = importFromFile('./dictionaries/B_answer')
+    N_answer = importFromFile('./dictionaries/notebooks')
+    TRUE_ANSWER = importFromFile('./dictionaries/T_answer')
+    FALSE_ANSWER = importFromFile('./dictionaries/F_answer')
 
-    print("Juju Bot: " + dictionary['WelcomeMsg'])
+
+    print(BOT_NAME, end='')
+    realType(dictionary['WelcomeMsg'] + '\n\n' + BOT_NAME + 'Para ajudar em sua escolha, vou iniciar fazendo algumas perguntas, certo?\n\n')
     
-    prompt = Prompt.ESPrompt(lines)
     while(True):
-       
-        index = random.choice(range(1, 5));
-        Banswer = B_answer[str(index)]
-        
-        answer = input("Juju Bot: " + Banswer + dictionary[parser.atual_fact] + '\n' +
-                        "Usuário: ")
-        if('sim' in answer.lower()):
-            prompt.do_add_fact(parser.atual_fact.lower())
-            next = parser.atual_fact + parser.atual_fact.lower() + '+'
-        elif('nao' in answer.lower()):
-            next = parser.atual_fact + parser.atual_fact.lower() + '!+'
-        else:
-            print("Juju Bot: Não entendi :(")
-            continue
-        for w in parser.structured_rules:
-            if (next == w.npi_left):
-                parser.atual_fact = w.npi_right
-
-        if(ord(parser.atual_fact) in range(76,90)):
-            print('>> Acredito que o melhor notebook para voce é o: ' + N_answer[parser.atual_fact] + ' <<')
-            finalString = 'https://zoom.com.br/search?sortBy=prod_items_sort_by_price_asc&q='  + urllib.parse.quote(N_answer[parser.atual_fact])
-            print('Juju Bot: Para facilitar sua vida, abri o produto em seu navegador, obrigado :D' )
-            time.sleep(5)
-            webbrowser.open(finalString, new = 2, autoraise=False)
-            #DEBUG
-            # prompt.do_solve(parser.queries)
-            # parserSolve = ESParser(prompt.get_lines())
-            # res = resolve_lines(parserSolve)
+        answer = input(f"{Color.PURPLE}Usuário: {Color.END}")
+        if any(answer.lower() == s for s in BYE_ANSWER):
+            exit('\n' + BOT_NAME + 'Saindo...')
+        elif any(answer.lower() == s for s in TRUE_ANSWER):
             break
-
-def chatbotInterface(parser):
-    dictionary = importFromFile('dictionary')
-    B_answer = importFromFile('B_answer')
-    N_answer = importFromFile('notebooks')
-
-    gui.sendButton("Juju Bot: " + dictionary['WelcomeMsg'])
+        else:
+            print("\n" + BOT_NAME, end='')
+            realType("não entendi :("+ "\n\n")
+        continue
 
     prompt = Prompt.ESPrompt(lines)
-    gui.Window.mainloop()
-
+    parser.atual_fact = 'A'
     while(True):
+        
         index = random.choice(range(1, 5))
         Banswer = B_answer[str(index)]
-        gui.sendButton("Juju Bot: " + Banswer + dictionary[parser.atual_fact] + '\n' +
-                        "Usuário: ")
-        answer = gui.entryMsg.get()
-        print(answer)
+        
+        print("\n" + BOT_NAME, end='')
+        realType(Banswer + dictionary[parser.atual_fact] + '\n\n')
+        answer = input(f"{Color.PURPLE}Usuário: {Color.END}")
 
-        if('sim' in answer.lower()):
+        if any(answer.lower() == s for s in BYE_ANSWER):
+            exit('\n' + BOT_NAME + 'Saindo...')
+        if any(answer.lower() == s for s in TRUE_ANSWER):
             prompt.do_add_fact(parser.atual_fact.lower())
             next = parser.atual_fact + parser.atual_fact.lower() + '+'
-        elif('nao' in answer.lower()):
+        elif any(answer.lower() == s for s in FALSE_ANSWER):
             next = parser.atual_fact + parser.atual_fact.lower() + '!+'
         else:
-            gui.sendButton("Juju Bot: Não entendi :(")
+            print("\n" + BOT_NAME, end='')
+            realType("não entendi :( vou repetir a pergunta!"+ "\n")
             continue
         for w in parser.structured_rules:
             if (next == w.npi_left):
                 parser.atual_fact = w.npi_right
 
         if(ord(parser.atual_fact) in range(76,90)):
-            gui.sendButton('>> Acredito que o melhor notebook para voce é o: ' + N_answer[parser.atual_fact] + ' <<')
+            print("\n" + BOT_NAME, end='')
+            color = Color.GREEN
+            realType(f"Certo, com as informações colhidas e utilizando meu algoritmo. Acredito que o melhor notebook para voce é o:\n{ color }{N_answer[parser.atual_fact]}{ Color.END } \n\n")
             finalString = 'https://zoom.com.br/search?sortBy=prod_items_sort_by_price_asc&q='  + urllib.parse.quote(N_answer[parser.atual_fact])
-            gui.sendButton('Juju Bot: Para facilitar sua vida, abri o produto em seu navegador, obrigado :D' )
-            webbrowser.open(finalString, new = 0, autoraise=False)
+            print(BOT_NAME, end='')
+            realType('para facilitar sua vida, abri o produto em seu navegador. Obrigado, volte sempre ♥' + '\n\n')
+            time.sleep(2)
+            webbrowser.open(finalString, new = 2, autoraise=False)
+            input(BOT_NAME + 'Pressione ENTER para reiniciar.')
+
             #DEBUG
-            # prompt.do_solve(parser.queries)
-            # parserSolve = ESParser(prompt.get_lines())
-            # res = resolve_lines(parserSolve)
+            #prompt.do_solve(parser.queries)
+            parserSolve = ESParser(prompt.get_lines())
+            res = resolve_lines(parserSolve, False)
             break
-
-
-def createGUI():
-    gui = GUI()
 
 if __name__ == "__main__":
     args = Cmd.args
@@ -129,18 +122,16 @@ if __name__ == "__main__":
         with open(args.input) as f:
             lines = f.readlines()
 
-            #teste interface
-            
-            if args.mode == "interactive":
-                Prompt.ESPrompt(lines).cmdloop()  
-            elif args.mode == "interface":
+            if args.mode == "interface":
                 parser = ESParser(lines)
                 gui = GUI()
-                snd = threading.Thread(target = chatbotInterface(parser)) 
-                snd.start() 
+                gui.setConfig(Prompt.ESPrompt(lines), parser, lines)
             else: 
                 parser = ESParser(lines)
-                chatbot(parser)
+                while(True):
+                    os.system('cls' if os.name == 'nt' else 'clear')
+                    chatbot(parser)
+
 
     except (Exception, BaseException) as e:
         print(e)

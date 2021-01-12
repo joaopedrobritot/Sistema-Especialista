@@ -1,8 +1,0 @@
-C <=> D  # C and D are True
-C <=> F  # C and F are True
-
-=F
-?FCD
-
-# assertions
-# =FCD

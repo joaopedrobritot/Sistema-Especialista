@@ -1,0 +1,10 @@
+['não',
+'nao',
+'Discordo',
+"acho que não",
+"acho que nao",
+"acredito que não",
+"acredito que nao",
+"creio que nao",
+"creio que não"
+]

@@ -1,9 +1,5 @@
 from enum import Enum
-from expert_system.util.Log import Logger
 from .util.Color import Color
-
-logger = Logger("Node")
-
 
 class ConnectorType(Enum):
     OR = '|'
@@ -13,11 +9,6 @@ class ConnectorType(Enum):
 
 
 class Node:
-    """
-    A Node is the main element stored in the tree. Each node is connected to each other in a parent/child relation.
-    If we know the value of the child, we can deduct the value of the parent.
-    For example, for the rule A => B, (A) is child of (=>) child of (B). By knowing A, we can deduct the parents values.
-    """
 
     def __init__(self, tree):
         self.children = []
@@ -45,9 +36,6 @@ class Node:
         if self.state_fixed is True and is_fixed is True and self.state is not None and self.state != status:
             raise BaseException(f'{ Color.FAIL }[Conflict]{ Color.END } Node {self} received two different states')
 
-        if self.state != status:
-            logger.info(f'{self.__repr__()} set to {status}')
-
         self.state = status
         self.state_fixed = is_fixed
         return status
@@ -58,20 +46,17 @@ class Node:
 
         state = None
         if self.state is not None:
-            logger.info(f"{self} returns {self.state}")
             state = self.state
             if self.state_fixed is True:
                 return state
-
         fixed_ret = []
         unfixed_ret = []
 
-        logger.info(f"{self} will resolve from children {self.children}")
+       
         f, u = self.solve_grouped_nodes(self.children, False)
         fixed_ret.extend(f)
         unfixed_ret.extend(u)
 
-        logger.info(f"{self} will resolve from parents {self.operand_parents}")
         self.solve_grouped_nodes(self.operand_parents, True)
 
         ret = fixed_ret if fixed_ret.__len__() is not 0 else unfixed_ret
@@ -137,10 +122,6 @@ class NegativeNode(Node):
 
 
 class ConnectorNode(Node):
-    """
-    A connector node represents a relation in the set: AND, OR, XOR, IMPLY.
-    You must differentiate the node operands from children.
-    """
 
     def __init__(self, connector_type, tree):
         super(ConnectorNode, self).__init__(tree)
@@ -174,8 +155,6 @@ class ConnectorNode(Node):
     def solve(self):
         if self.visited:
             return self.state
-
-        logger.info(f"{self} will resolve from operands: {self.operands}")
 
         self.visited = True
         if self.type is ConnectorType.IMPLY:

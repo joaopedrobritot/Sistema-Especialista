@@ -1,0 +1,9 @@
+['certo', 
+'okay', 
+'sim', 
+'prefiro', 
+'ok', 
+'acho que sim',
+'creio que sim',
+'acredito que sim',
+]

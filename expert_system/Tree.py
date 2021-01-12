@@ -12,11 +12,7 @@ REGEX_OP = r'\+|\^|\||!'
 
 
 class ImplicationData:
-    """
-    Used to check when if implications are valid.
-    An implication is invalid only when True => False.
-    """
-
+    
     def __init__(self, left, right):
         self.left = left
         self.right = right
@@ -32,18 +28,8 @@ class ImplicationData:
 
 
 class Tree:
-    """
-    A tree stores the state of the expert system based on rules, facts and queries
-    """
 
     def __init__(self):
-        """
-        It stores the list of UNIQUE elements in .atom. It means that the same instance of the Atom "A"
-        will be used for all the equations.
-
-        The root_node allows to connect all the nodes to a single Tree. So that all the rules
-        are connected using a unique graph.
-        """
 
         self.atoms = {}
         self.connectors = []
@@ -56,9 +42,6 @@ class Tree:
         return "<🌲 Tree: { self.atoms }>"
 
     def create_atom(self, atom_name):
-        """
-        Each new atom is stored inside a dictionary for convenience. It also avoids duplication.
-        """
 
         atom = self.atoms.get(atom_name)
         if atom is None:
@@ -100,15 +83,8 @@ class Tree:
 
 
 class NPITree(Tree):
-    """
-    Creates a tree from data following the pattern: rules, facts and queries.
-    """
 
     def __init__(self, npi_rules, facts, queries):
-        """
-        Rules must use the NPI notation (ex: AB+C|)
-        Facts and queries must be represented as arrays of single characters (ex: Facts = ["A", "B"])
-        """
 
         super(NPITree, self).__init__()
 
@@ -123,11 +99,6 @@ class NPITree(Tree):
             self.atoms.update(dict((atom_str, self.create_atom(atom_str)) for atom_str in atoms))
 
     def set_atoms_state(self, npi_rules, facts, queries):
-        """
-        Atoms are by default False.
-        If an atom is in the facts, its state becomes True.
-        If an atom is in the conclusion side, its state becomes None (undefined).
-        """
 
         atoms_in_conclusion = []
         for rule in npi_rules:
@@ -141,9 +112,6 @@ class NPITree(Tree):
             self.set_atom_state(fact, True)
 
     def set_atoms_relations(self, rules):
-        """
-        Rules are formatted using the NPI notation.
-        """
 
         if self.atoms.__len__() is 0:
             raise BaseException("The tree is empty")

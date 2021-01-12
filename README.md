@@ -1,1 +1,1 @@
-## OPA
+## Projeto IA - Sistema Especialista para recomendação de notebooks

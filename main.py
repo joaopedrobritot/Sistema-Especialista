@@ -18,10 +18,10 @@ import tkinter as tk
 dictionary = {}
 B_answer = {}
 N_answer = {}
-BOT_NAME = f"{ Color.BLUE }Juazres: { Color.END }"
+BOT_NAME = f"{ Color.BLUE }Amber Bot: { Color.END }"
 TRUE_ANSWER = []
 FALSE_ANSWER = []
-BYE_ANSWER = ['xau', 'sair', 'exit']
+BYE_ANSWER = ['xau', 'sair', 'exit', 'adeus']
 #gui = GUI()
 
 def resolve_lines(parser, prt=False):

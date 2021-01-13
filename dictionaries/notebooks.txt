@@ -12,4 +12,4 @@
 	'V': 'Notebook Compaq Presario CQ-25 Intel Pentium N3700 14" 4GB SSD 120 GB',
 	'X': 'Samsung Book E30 Intel® Core™ i3-10110U, 4GB RAM, 1TB HDD',
 
-}
+} 	

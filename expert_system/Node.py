@@ -52,7 +52,6 @@ class Node:
         fixed_ret = []
         unfixed_ret = []
 
-       
         f, u = self.solve_grouped_nodes(self.children, False)
         fixed_ret.extend(f)
         unfixed_ret.extend(u)

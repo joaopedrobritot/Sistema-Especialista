@@ -31,7 +31,7 @@ class GUI:
         self.SEND = False
         self.final = False
         ##self.Window.bind('<Enter>', self.enter)
-        self.layout("JuJu Bot")
+        self.layout("Amber Bot")
 
     def layout(self,name): 
         
@@ -146,8 +146,8 @@ class GUI:
         self.line = line
         self.prompt = prompt
         self.parser = parser
-        self.sendButton("Juju Bot: " + dictionary['WelcomeMsg'])
-        self.sendButton("Juju Bot: Vamos começar. " + dictionary[self.parser.atual_fact])
+        self.sendButton("Amber Bot: " + dictionary['WelcomeMsg'])
+        self.sendButton("Amber Bot: Vamos começar. " + dictionary[self.parser.atual_fact])
 
         self.Window.mainloop()
 
@@ -173,7 +173,7 @@ class GUI:
         elif any(answer.lower() == s for s in FALSE_ANSWER):
             next = self.parser.atual_fact + self.parser.atual_fact.lower() + '!+'
         else:
-            self.sendButton("Juju Bot: Não entendi :(")
+            self.sendButton("Amber Bot: Não entendi :(")
         for w in self.parser.structured_rules:
             if (next == w.npi_left):
                 self.parser.atual_fact = w.npi_right
@@ -182,9 +182,9 @@ class GUI:
 
      
         if(ord(self.parser.atual_fact) in range(76,90)):
-            self.sendButton('Juju Bot: Acredito que o melhor notebook para voce é o: ' + N_answer[self.parser.atual_fact])
+            self.sendButton('Amber Bot: Acredito que o melhor notebook para voce é o: ' + N_answer[self.parser.atual_fact])
             finalString = 'https://zoom.com.br/search?sortBy=prod_items_sort_by_price_asc&q='  + urllib.parse.quote(N_answer[self.parser.atual_fact])
-            self.sendButton('Juju Bot: Para facilitar sua vida, abri o produto em seu navegador, obrigado :D\n-------------------------------------------------------------' )
+            self.sendButton('Amber Bot: Para facilitar sua vida, abri o produto em seu navegador, obrigado :D\n-------------------------------------------------------------' )
             webbrowser.open(finalString, new = 0, autoraise=False)
             self.final = True
             #DEBUG
@@ -192,4 +192,4 @@ class GUI:
             # self.parserSolve = ESself.parser(self.prompt.get_lines())
             # res = resolve_lines(self.parserSolve)
     
-        self.sendButton("Juju Bot: " + Banswer + dictionary[self.parser.atual_fact])
+        self.sendButton("Amber Bot: " + Banswer + dictionary[self.parser.atual_fact])

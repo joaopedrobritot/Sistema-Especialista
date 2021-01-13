@@ -25,13 +25,22 @@ BYE_ANSWER = ['xau', 'sair', 'exit', 'adeus']
 #gui = GUI()
 
 def resolve_lines(parser, prt=False):
+    N_answer = importFromFile('./dictionaries/notebooks')
+
     tree = Tree.NPITree(parser.structured_rules, parser.facts, parser.queries)
     results = {}
     for query in parser.queries:
         results[query] = tree.resolve_query(query)
-        if(prt):
-            color = Color.GREEN if results[query] is True else Color.FAIL
-            print(f"{ query } resolved as { color }{ results[query] }{ Color.END }")
+        if(prt and results[query]):
+            print("\n" + BOT_NAME, end='')
+            color = Color.GREEN
+            realType(f"Certo, com as informações colhidas e utilizando meu algoritmo. Acredito que o melhor notebook para voce é o:\n{ color }{N_answer[query]}{ Color.END } \n\n")
+            finalString = 'https://zoom.com.br/search?sortBy=prod_items_sort_by_price_asc&q='  + urllib.parse.quote(N_answer[query])
+            print(BOT_NAME, end='')
+            realType('para facilitar sua vida, abri o produto em seu navegador. Obrigado, volte sempre ♥' + '\n\n')
+            time.sleep(2)
+            webbrowser.open(finalString, new = 2, autoraise=False)
+
     return results
 
 
@@ -47,7 +56,7 @@ def realType(str, userinput=True):
     for letter in str:
         sys.stdout.write(letter)
         sys.stdout.flush()
-        time.sleep(random.random()*1/10)
+        time.sleep(random.random()*1/1000)
   
 
 def chatbot(parser):
@@ -98,21 +107,12 @@ def chatbot(parser):
             if (next == w.npi_left):
                 parser.atual_fact = w.npi_right
 
-        if(ord(parser.atual_fact) in range(76,90)):
-            print("\n" + BOT_NAME, end='')
-            color = Color.GREEN
-            realType(f"Certo, com as informações colhidas e utilizando meu algoritmo. Acredito que o melhor notebook para voce é o:\n{ color }{N_answer[parser.atual_fact]}{ Color.END } \n\n")
-            finalString = 'https://zoom.com.br/search?sortBy=prod_items_sort_by_price_asc&q='  + urllib.parse.quote(N_answer[parser.atual_fact])
-            print(BOT_NAME, end='')
-            realType('para facilitar sua vida, abri o produto em seu navegador. Obrigado, volte sempre ♥' + '\n\n')
-            time.sleep(2)
-            webbrowser.open(finalString, new = 2, autoraise=False)
-            input(BOT_NAME + 'Pressione ENTER para reiniciar.')
-
+        if(ord(parser.atual_fact) in range(76,90)):     
             #DEBUG
             #prompt.do_solve(parser.queries)
             parserSolve = ESParser(prompt.get_lines())
-            res = resolve_lines(parserSolve, False)
+            res = resolve_lines(parserSolve, True)
+            input(BOT_NAME + 'Pressione ENTER para reiniciar.')
             break
 
 if __name__ == "__main__":
@@ -136,5 +136,3 @@ if __name__ == "__main__":
     except (Exception, BaseException) as e:
         print(e)
         sys.exit(1)
-
-

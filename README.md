@@ -7,7 +7,7 @@ Instalação:
 - Baixa os arquivos desse repositório.
 - Instale as dependências utilizando o pip, na raiz do projeto:
 ```cmd 
-    pip install requirements.txt
+    pip install -r requirements.txt
 ```
 
 Opções de uso:
